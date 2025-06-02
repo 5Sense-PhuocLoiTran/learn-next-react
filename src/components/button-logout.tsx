@@ -2,14 +2,12 @@
 
 import authApiRequest from "@/apiRequest/auth"
 import { handleErrorApi } from "@/lib/utils"
-import { useRouter } from "next/navigation"
 
 export default function ButtonLogout() {
-  const router = useRouter()
   const handleLogout = async () => {
     try {
       await authApiRequest.logoutFromNextClientToNextServer()
-      router.push("/login")
+      window.location.href = "/login"
     } catch (error) {
       handleErrorApi({
         error

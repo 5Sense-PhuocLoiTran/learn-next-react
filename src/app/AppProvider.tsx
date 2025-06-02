@@ -1,6 +1,6 @@
 "use client"
 import { clientSessionToken } from "@/lib/https"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function AppProvider({
   children,
@@ -9,11 +9,20 @@ export default function AppProvider({
   children: React.ReactNode
   initialSessionToken?: string
 }) {
-  useState(() => {
+  const [tokenReady, setTokenReady] = useState(false)
+
+  useEffect(() => {
     if (typeof window !== "undefined") {
+      console.log("Setting initial session token:", initialSessionToken)
       clientSessionToken.value = initialSessionToken
+      setTokenReady(true)
     }
-  })
+  }, [initialSessionToken])
+
+  if (!tokenReady) {
+    // Optionally show a loading spinner or nothing
+    return null
+  }
 
   return <>{children}</>
 }

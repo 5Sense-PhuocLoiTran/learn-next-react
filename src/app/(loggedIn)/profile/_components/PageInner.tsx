@@ -1,37 +1,22 @@
-"use client"
 import accountApiRequest from "@/apiRequest/account"
-import { ProfileResponse } from "@/schemaValidations/account.schema"
-import { useEffect, useState } from "react"
+import { cookies } from "next/headers"
+import Profile from "./profile"
 
-export default function PageInner() {
-  const [profile, setProfile] = useState<ProfileResponse | null>(null)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await accountApiRequest.profileClient()
-        if (res?.payload) {
-          setProfile(res.payload)
-        } else {
-          setProfile(null)
-        }
-        console.log("Profile Data:", res)
-      } catch (error) {
-        console.error("Error fetching profile data:", error)
-      }
-    }
-    fetchData()
-  }, [])
+export default async function PageInner() {
+  const cookieStore = await cookies()
+  const sessionToken = cookieStore.get("sessionToken")
+  const result = await accountApiRequest.profile(sessionToken?.value ?? "")
 
   return (
     <div>
       <h1 className="text-2xl font-bold mb-4">Profile Page</h1>
-      {profile && (
+
+      {result && (
         <div>
           <h2 className="text-xl font-semibold mb-2">
-            Welcome, {profile.data.name}
+            Welcome, {result.payload.data.name}
           </h2>
-          <p>Email: {profile.data.email}</p>
+          <Profile />
         </div>
       )}
     </div>

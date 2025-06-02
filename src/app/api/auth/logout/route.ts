@@ -16,7 +16,7 @@ export async function POST() {
     return Response.json(result.payload, {
       status: 200,
       headers: {
-        "Set-Cookie": `sessionToken=; Path=/; HttpOnly; Secure; SameSite=Strict`
+        "Set-Cookie": `sessionToken=; Path=/; HttpOnly; Secure; SameSite=Strict; Expires=Thu, 01 Jan 1970 00:00:00 GMT`
       }
     })
   } catch (error) {

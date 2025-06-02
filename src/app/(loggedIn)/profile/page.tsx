@@ -1,5 +1,5 @@
-import PageInner from "./_components/PageInner";
+import PageInner from "./_components/PageInner"
 
-const Page = () => <PageInner />;
+const Page = () => <PageInner />
 
-export default Page;
+export default Page

@@ -34,6 +34,11 @@ const header = () => {
               </Link>
             </li>
             <li>
+              <Link href="/" className="hover:underline">
+                Home
+              </Link>
+            </li>
+            <li>
               <Link href="/profile" className="hover:underline">
                 Profile
               </Link>

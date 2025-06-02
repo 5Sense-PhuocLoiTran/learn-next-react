@@ -16,12 +16,10 @@ import { Input } from "@/components/ui/input"
 import { LoginBody, LoginBodyType } from "@/schemaValidations/auth.schema"
 import { toast } from "sonner"
 import authApiRequest from "@/apiRequest/auth"
-import { useRouter } from "next/navigation"
 import { handleErrorApi } from "@/lib/utils"
 import { useState } from "react"
 
 const PageInner = () => {
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
   const form = useForm<LoginBodyType>({
     resolver: zodResolver(LoginBody),
@@ -44,7 +42,7 @@ const PageInner = () => {
       await authApiRequest.auth({
         sessionToken: res.payload.data.token
       })
-      router.push("/")
+      window.location.href = "/"
     } catch (error: any) {
       handleErrorApi({
         error,

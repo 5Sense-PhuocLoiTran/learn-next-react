@@ -74,23 +74,18 @@ const request = async <Response>(
   options?: CustomOptions | undefined
 ) => {
   const body = options?.body ? JSON.stringify(options.body) : undefined
-  console.log(clientSessionToken.value)
   const baseHeaders = {
     "Content-Type": "application/json",
     Authorization: clientSessionToken.value
       ? `Bearer ${clientSessionToken.value}`
       : ""
   }
-  // Nếu không truyền baseUrl (hoặc baseUrl = undefined) thì lấy từ envConfig.NEXT_PUBLIC_API_ENDPOINT
-  // Nếu truyền baseUrl thì lấy giá trị truyền vào, truyền vào '' thì đồng nghĩa với việc chúng ta gọi API đến Next.js Server
 
   const baseUrl =
     options?.baseUrl === undefined
       ? envConfig.NEXT_PUBLIC_API_ENDPOINT
       : options.baseUrl
-
   const fullUrl = url.startsWith("/") ? `${baseUrl}${url}` : `${baseUrl}/${url}`
-
   const res = await fetch(fullUrl, {
     ...options,
     headers: {
