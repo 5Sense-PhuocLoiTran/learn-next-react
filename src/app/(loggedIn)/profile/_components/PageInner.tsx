@@ -1,6 +1,6 @@
 import accountApiRequest from "@/apiRequest/account"
 import { cookies } from "next/headers"
-import Profile from "./profile"
+import ProfileForm from "./ProfileForm"
 
 export default async function PageInner() {
   const cookieStore = await cookies()
@@ -9,14 +9,12 @@ export default async function PageInner() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-4">Profile Page</h1>
-
       {result && (
         <div>
-          <h2 className="text-xl font-semibold mb-2">
+          <h2 className="text-2xl font-bold mb-6">
             Welcome, {result.payload.data.name}
           </h2>
-          <Profile />
+          <ProfileForm profile={result.payload.data} />
         </div>
       )}
     </div>

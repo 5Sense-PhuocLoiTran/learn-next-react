@@ -1,5 +1,8 @@
 import http from "@/lib/https"
-import { AccountResType } from "@/schemaValidations/account.schema"
+import {
+  AccountResType,
+  UpdateMeBodyType
+} from "@/schemaValidations/account.schema"
 
 const accountApiRequest = {
   profile: (sessionToken: string) =>
@@ -8,7 +11,9 @@ const accountApiRequest = {
         Authorization: `Bearer ${sessionToken}`
       }
     }),
-  profileClient: () => http.get<AccountResType>("/account/me")
+  profileClient: () => http.get<AccountResType>("/account/me"),
+  updateProfile: (body: UpdateMeBodyType) =>
+    http.put<AccountResType>("/account/me", body)
 }
 
 export default accountApiRequest

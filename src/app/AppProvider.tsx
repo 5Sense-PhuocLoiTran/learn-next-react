@@ -13,7 +13,6 @@ export default function AppProvider({
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      console.log("Setting initial session token:", initialSessionToken)
       clientSessionToken.value = initialSessionToken
       setTokenReady(true)
     }

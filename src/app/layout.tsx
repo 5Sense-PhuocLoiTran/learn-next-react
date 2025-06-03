@@ -28,7 +28,6 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const sessionToken = cookieStore.get("sessionToken")?.value || undefined
-  console.log("sessionToken in layout", sessionToken)
   return (
     <html lang="en">
       <body
