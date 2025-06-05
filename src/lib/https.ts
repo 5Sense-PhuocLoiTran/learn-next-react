@@ -78,12 +78,20 @@ const request = async <Response>(
       ? options.body
       : JSON.stringify(options.body)
     : undefined
-  const baseHeaders = {
-    "Content-Type": "application/json",
-    Authorization: clientSessionToken.value
-      ? `Bearer ${clientSessionToken.value}`
-      : ""
-  }
+
+  const baseHeaders =
+    options?.body instanceof FormData
+      ? {
+          Authorization: clientSessionToken.value
+            ? `Bearer ${clientSessionToken.value}`
+            : ""
+        }
+      : {
+          "Content-Type": "application/json",
+          Authorization: clientSessionToken.value
+            ? `Bearer ${clientSessionToken.value}`
+            : ""
+        }
 
   const baseUrl =
     options?.baseUrl === undefined
@@ -95,7 +103,7 @@ const request = async <Response>(
     headers: {
       ...baseHeaders,
       ...options?.headers
-    },
+    } as any,
     body,
     method
   })
