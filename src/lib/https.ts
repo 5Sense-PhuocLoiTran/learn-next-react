@@ -73,7 +73,11 @@ const request = async <Response>(
   url: string,
   options?: CustomOptions | undefined
 ) => {
-  const body = options?.body ? JSON.stringify(options.body) : undefined
+  const body = options?.body
+    ? options?.body instanceof FormData
+      ? options.body
+      : JSON.stringify(options.body)
+    : undefined
   const baseHeaders = {
     "Content-Type": "application/json",
     Authorization: clientSessionToken.value
