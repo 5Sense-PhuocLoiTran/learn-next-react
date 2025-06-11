@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { ProductSchema } from "@/schemaValidations/product.schema"
 import Image from "next/image"
+import Link from "next/link"
 import { z } from "zod"
 
 type Product = z.infer<typeof ProductSchema>
@@ -24,9 +25,12 @@ const ProductCard = ({ product }: { product: Product }) => {
           <p className="text-green-600 font-bold">{product.price} VND</p>
         </div>
         <div className="flex items-center mt-4">
-          <Button variant="default" className="">
+          <Link
+            href={`/products/${product.id}`}
+            className="text-blue-500 hover:underline px-4 py-2 bg-blue-100 rounded"
+          >
             Edit
-          </Button>
+          </Link>
           <Button variant="destructive" className=" ml-2">
             Delete
           </Button>

@@ -2,7 +2,8 @@ import http from "@/lib/https"
 import {
   CreateProductBodyType,
   ProductListResType,
-  ProductResType
+  ProductResType,
+  UpdateProductBodyType
 } from "@/schemaValidations/product.schema"
 
 const productApiRequest = {
@@ -12,7 +13,7 @@ const productApiRequest = {
     http.post<{ message: string; data: string }>("/media/upload", body),
   getListProducts: () => http.get<ProductListResType>("/products"),
   getProductById: (id: string) => http.get<ProductResType>(`/products/${id}`),
-  updateProduct: (id: string, data: CreateProductBodyType) =>
+  updateProduct: (id: number, data: UpdateProductBodyType) =>
     http.put<ProductResType>(`/products/${id}`, data)
 }
 
