@@ -1,16 +1,18 @@
 "use client"
 
 import authApiRequest from "@/apiRequest/auth"
+import { useAppContext } from "@/app/AppProvider"
+import { clientSessionToken } from "@/lib/https"
 import { handleErrorApi } from "@/lib/utils"
-import { useRouter } from "next/navigation"
 
 export default function ButtonLogout() {
-  const router = useRouter()
+  const { setUser } = useAppContext()
   const handleLogout = async () => {
     try {
       await authApiRequest.logoutFromNextClientToNextServer()
-      router.refresh()
-      router.push("/login")
+      if (setUser) setUser(null)
+      clientSessionToken.value = ""
+      window.location.href = "/login"
     } catch (error) {
       handleErrorApi({
         error

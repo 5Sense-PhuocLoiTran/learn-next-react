@@ -16,7 +16,7 @@ export default async function Header({
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/">
           <h1 className="text-2xl font-bold ">Nudo Application</h1>
-        </Link>
+        </Link> 
         <nav className="mt-2">
           {isLoggedIn && (
             <ul className="flex space-x-4">

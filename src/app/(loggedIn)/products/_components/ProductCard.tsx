@@ -8,7 +8,13 @@ import DeleteProductButton from "./DeleteProductButton"
 
 type Product = z.infer<typeof ProductSchema>
 
-const ProductCard = ({ product }: { product: Product }) => {
+const ProductCard = ({
+  product,
+  isAuthenticated
+}: {
+  product: Product
+  isAuthenticated: boolean
+}) => {
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("vi-VN", {
       style: "currency",
@@ -33,15 +39,17 @@ const ProductCard = ({ product }: { product: Product }) => {
             {formatPrice(product.price)}
           </p>
         </div>
-        <div className="flex items-center mt-4 space-x-2">
-          <Link
-            href={`/products/${product.id}`}
-            className="text-blue-500 hover:underline px-4 py-2 bg-blue-100 rounded-md text-sm"
-          >
-            Edit
-          </Link>
-          <DeleteProductButton product={product} />
-        </div>
+        {isAuthenticated && (
+          <div className="flex items-center mt-4 space-x-2">
+            <Link
+              href={`/products/${product.id}`}
+              className="text-blue-500 hover:underline px-4 py-2 bg-blue-100 rounded-md text-sm"
+            >
+              Edit
+            </Link>
+            <DeleteProductButton product={product} />
+          </div>
+        )}
       </div>
     </div>
   )

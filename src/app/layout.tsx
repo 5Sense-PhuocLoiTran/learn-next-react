@@ -29,6 +29,7 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const sessionToken = cookieStore.get("sessionToken")?.value || undefined
+  const isAuthenticated = Boolean(sessionToken)
   let user: AccountResType["data"] | null = null
   try {
     if (sessionToken) {
@@ -44,7 +45,11 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider initialSessionToken={sessionToken} user={user}>
+        <AppProvider
+          initialSessionToken={sessionToken}
+          user={user}
+          isAuthenticated={isAuthenticated}
+        >
           <Header user={user} />
           {children}
         </AppProvider>
