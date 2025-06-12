@@ -16,15 +16,20 @@ export default async function Header({
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         <Link href="/">
           <h1 className="text-2xl font-bold ">Nudo Application</h1>
-        </Link> 
+        </Link>
         <nav className="mt-2">
           {isLoggedIn && (
             <ul className="flex space-x-4">
               {userProfile && (
                 <li>
-                  <span className="font-semibold text-yellow-400">
-                    Welcome, {userProfile.name || userProfile.email}!
-                  </span>
+                  <Link
+                    href="/profile"
+                    className="hover:underline hover:text-yellow-400"
+                  >
+                    <span className="font-semibold text-yellow-400">
+                      Welcome, {userProfile.name || userProfile.email}!
+                    </span>
+                  </Link>
                 </li>
               )}
               <li>
@@ -47,6 +52,11 @@ export default async function Header({
           )}
           {!isLoggedIn && (
             <ul className="flex space-x-4">
+              <li>
+                <Link href="/products" className="hover:underline">
+                  Products
+                </Link>
+              </li>
               <li>
                 <Link href="/login" className="hover:underline">
                   Login

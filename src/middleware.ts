@@ -3,6 +3,7 @@ import type { NextRequest } from "next/server"
 
 const privatePaths = ["/profile"]
 const authPaths = ["/login", "/register"]
+const productEditRegex = /^\/products\/\d+\/edit/
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -19,8 +20,12 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL("/", request.url))
   }
 
+  if (productEditRegex.test(pathname) && !sessionToken) {
+    return NextResponse.redirect(new URL("/login", request.url))
+  }
+
   return NextResponse.next()
 }
 export const config = {
-  matcher: ["/profile", "/login", "/register"]
+  matcher: ["/profile", "/login", "/register", "/products/:path*"]
 }

@@ -14,7 +14,11 @@ const PageInner = async () => {
   const productsList = payload.data
   return (
     <div>
-      <h1 className="text-2xl mb-4 font-bold">Products page</h1>
+      <div className="top-content mb-6">
+        <h1 className="text-2xl mb-2 font-bold">All Products</h1>
+        <p>You can select a product to view its details.</p>
+        <p>If you are an admin, you can also edit or delete products.</p>
+      </div>
       {isAuthenticated && (
         <Link href="/products/add">
           <Button variant={"default"} className="mb-4">
