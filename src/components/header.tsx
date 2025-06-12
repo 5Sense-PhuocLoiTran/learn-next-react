@@ -1,24 +1,15 @@
 import Link from "next/link"
 import ButtonLogout from "./ButtonLogout"
-import { cookies } from "next/headers"
 import ProductMenu from "./ProductMenu"
-import accountApiRequest from "@/apiRequest/account"
+import { AccountResType } from "@/schemaValidations/account.schema"
 
-export default async function Header() {
-  const cookieStore = await cookies()
-  const sessionToken = cookieStore.get("sessionToken")
-  const isLoggedIn = !!sessionToken
-  let userProfile = null
-  try {
-    if (isLoggedIn) {
-      const data = await accountApiRequest.profile(sessionToken?.value || "")
-      userProfile = data.payload.data
-    }
-  } catch (error) {
-    console.error("Error fetching profile:", error)
-    // Handle error if needed, e.g., redirect to login
-    // window.location.href = "/login"
-  }
+export default async function Header({
+  user
+}: {
+  user: AccountResType["data"] | null
+}) {
+  const isLoggedIn = !!user
+  const userProfile = isLoggedIn ? user : null
 
   return (
     <header className="bg-gray-800 text-white p-4">

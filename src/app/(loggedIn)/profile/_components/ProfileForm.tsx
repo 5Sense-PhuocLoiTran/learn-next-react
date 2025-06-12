@@ -23,10 +23,12 @@ import {
 } from "@/schemaValidations/account.schema"
 import accountApiRequest from "@/apiRequest/account"
 import { useRouter } from "next/navigation"
+import { useAppContext } from "@/app/AppProvider"
 
 type Profile = AccountResType["data"]
 
 const ProfileForm = ({ profile }: { profile: Profile }) => {
+  const { setUser } = useAppContext()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const form = useForm<UpdateMeBodyType>({
@@ -46,6 +48,9 @@ const ProfileForm = ({ profile }: { profile: Profile }) => {
         description: res.payload.message || "Profile updated successfully"
       })
       router.refresh()
+      if (setUser) {
+        setUser(res.payload.data)
+      }
     } catch (error: any) {
       handleErrorApi({
         error,

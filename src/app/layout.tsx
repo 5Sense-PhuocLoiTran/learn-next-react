@@ -4,6 +4,8 @@ import "./globals.css"
 import Header from "@/components/header"
 import AppProvider from "@/app/AppProvider"
 import { cookies } from "next/headers"
+import accountApiRequest from "@/apiRequest/account"
+import { AccountResType } from "@/schemaValidations/account.schema"
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -27,13 +29,23 @@ export default async function RootLayout({
 }>) {
   const cookieStore = await cookies()
   const sessionToken = cookieStore.get("sessionToken")?.value || undefined
+  let user: AccountResType["data"] | null = null
+  try {
+    if (sessionToken) {
+      const data = await accountApiRequest.profile(sessionToken || "")
+      user = data.payload.data
+    }
+  } catch (error) {
+    console.error("Error fetching profile:", error)
+  }
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AppProvider initialSessionToken={sessionToken}>
-          <Header />
+        <AppProvider initialSessionToken={sessionToken} user={user}>
+          <Header user={user} />
           {children}
         </AppProvider>
       </body>
