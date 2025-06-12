@@ -1,6 +1,7 @@
 "use client"
 import { clientSessionToken } from "@/lib/https"
 import { useEffect, useState } from "react"
+import { Toaster } from "@/components/ui/sonner"
 
 export default function AppProvider({
   children,
@@ -23,5 +24,10 @@ export default function AppProvider({
     return null
   }
 
-  return <>{children}</>
+  return (
+    <>
+      <Toaster richColors />
+      {children}
+    </>
+  )
 }
